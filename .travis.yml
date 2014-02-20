@@ -4,8 +4,11 @@ env:
  - GHCVER=7.6.3
  - GHCVER=7.6.2
  - GHCVER=7.6.1
+ - GHCVER=7.4.2
+ - GHCVER=7.4.1
  - HPVER=2013.2.0.0
  - HPVER=2012.4.0.0
+ - HPVER=2012.2.0.0
 
 before_install:
  - case "$HPVER" in
@@ -59,5 +62,8 @@ script:
 
 matrix:
   allow_failures:
-    - GHCVER=head
-    - GHCVER=7.8.1
+    - env: GHCVER=head
+    - env: GHCVER=7.8.1
+    - env: GHCVER=7.4.2
+    - env: GHCVER=7.4.1
+    - env: HPVER=2012.2.0.0
