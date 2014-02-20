@@ -3,24 +3,25 @@
 
 name:                genjitsu
 version:             0.1.0.0
--- synopsis:
--- description:
+synopsis:            Restricted and Testable IO action generator.
+description:         Restricted and Testable IO action generator.
 license:             BSD3
 license-file:        LICENSE
 author:              Noriyuki OHKAWA <n.ohkawa@gmail.com>
 maintainer:          Noriyuki OHKAWA <n.ohkawa@gmail.com>
--- copyright:
+copyright:           Copyright (c) 2014, Noriyuki OHKAWA
 category:            Control
 build-type:          Simple
--- extra-source-files:
 cabal-version:       >=1.10
+
+source-repository head
+  type:                git
+  location:            https://github.com/notogawa/genjitsu.git
 
 library
   exposed-modules:     Prelude.Genjitsu
                        Control.Genjitsu.TH
-  -- other-modules:
-  -- other-extensions:
-  build-depends:       base
+  build-depends:       base == 4.*
                      , template-haskell
                      , mtl
                      , extensible-effects
