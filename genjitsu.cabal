@@ -20,7 +20,7 @@ library
                        Control.Genjitsu.TH
   -- other-modules:
   -- other-extensions:
-  build-depends:       base >=4.6 && <4.7
+  build-depends:       base
                      , template-haskell
                      , mtl
                      , extensible-effects
