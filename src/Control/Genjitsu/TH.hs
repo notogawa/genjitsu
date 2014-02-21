@@ -77,7 +77,7 @@ genjitsu :: Name -> DecsQ
 genjitsu function = reify function >>= gen where
     gen (VarI f t _ _) | isIO t = do
       let baseName = toUpperHead $ nameBase f
-      let c = mkName ("MonadIOAllow" ++ baseName)
+      let c = mkName ("Allow" ++ baseName)
       let i = mkName ("allow" ++ baseName)
       let gens = [ genClassDecl, genInstanceIODecl, genTypeDecl, genFunctionDecl ]
       decls <- mapM (\g -> g f t c i) gens
@@ -89,11 +89,11 @@ genjitsu function = reify function >>= gen where
 --
 -- >>> let f = 'readLn
 -- >>> t <- runQ [t| Read a => IO a |]
--- >>> let c = mkName "MonadIOAllowReadLn"
+-- >>> let c = mkName "AllowReadLn"
 -- >>> let i = mkName "allowReadLn"
 -- >>> x <- runQ $ genClassDecl f t c i
 -- >>> ppr x
--- class MonadIOAllowReadLn m
+-- class AllowReadLn m
 --     where allowReadLn :: forall a_0 . GHC.Read.Read a_0 => m a_0
 --
 genClassDecl :: Name -> Type -> Name -> Name -> DecQ
@@ -104,11 +104,11 @@ genClassDecl _ t c i = classD (cxt []) c [PlainTV m] [] [sigD i (return (replace
 --
 -- >>> let f = 'readLn
 -- >>> t <- runQ [t| Read a => IO a |]
--- >>> let c = mkName "MonadIOAllowReadLn"
+-- >>> let c = mkName "AllowReadLn"
 -- >>> let i = mkName "allowReadLn"
 -- >>> x <- runQ $ genInstanceIODecl f t c i
 -- >>> ppr x
--- instance MonadIOAllowReadLn GHC.Types.IO
+-- instance AllowReadLn GHC.Types.IO
 --     where allowReadLn = System.IO.readLn
 --
 genInstanceIODecl :: Name -> Type -> Name -> Name -> DecQ
@@ -118,12 +118,12 @@ genInstanceIODecl f _ c i = instanceD (cxt []) (appT (conT c) (conT ''IO)) [valD
 --
 -- >>> let f = 'readLn
 -- >>> t <- runQ [t| Read a => IO a |]
--- >>> let c = mkName "MonadIOAllowReadLn"
+-- >>> let c = mkName "AllowReadLn"
 -- >>> let i = mkName "allowReadLn"
 -- >>> x <- runQ $ genTypeDecl f t c i
 -- >>> ppr x
 -- readLn :: forall r m . (Data.Typeable.Internal.Typeable1 m,
---                         MonadIOAllowReadLn m,
+--                         AllowReadLn m,
 --                         Data.OpenUnion1.Member (Control.Eff.Lift.Lift m) r,
 --                         Data.OpenUnion1.SetMember Control.Eff.Lift.Lift
 --                                                   (Control.Eff.Lift.Lift m)
@@ -140,7 +140,7 @@ genTypeDecl f t c _ = sigD n (forallT [PlainTV r,PlainTV m] (cxt [classP ''Typea
 --
 -- >>> let f = 'readLn
 -- >>> t <- runQ [t| Read a => IO a |]
--- >>> let c = mkName "MonadIOAllowReadLn"
+-- >>> let c = mkName "AllowReadLn"
 -- >>> let i = mkName "allowReadLn"
 -- >>> x <- runQ $ genFunctionDecl f t c i
 -- >>> ppr x

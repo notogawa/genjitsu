@@ -24,14 +24,14 @@ import Control.Eff.Lift
 -- | サンプル1
 --
 -- >>> newtype Mock1 a = Mock1 { runMock1 :: State String a } deriving (Functor, Applicative, Monad, MonadState String, Typeable)
--- >>> instance MonadIOAllowReadLn   Mock1 where allowReadLn   = fmap read get
--- >>> instance MonadIOAllowPutStrLn Mock1 where allowPutStrLn = put
+-- >>> instance AllowReadLn   Mock1 where allowReadLn   = fmap read get
+-- >>> instance AllowPutStrLn Mock1 where allowPutStrLn = put
 -- >>> runState (runMock1 $ runLift sample1) "2"
 -- ((),"3")
 --
 sample1 :: ( Typeable1 m
-           , MonadIOAllowReadLn m
-           , MonadIOAllowPutStrLn m
+           , AllowReadLn m
+           , AllowPutStrLn m
            , Member (Lift m) r
            , SetMember Lift (Lift m) r
            ) =>
@@ -48,14 +48,14 @@ sample1IO = runLift sample1
 -- | サンプル2
 --
 -- >>> newtype Mock2 a = Mock2 { runMock2 :: Writer String a } deriving (Functor, Applicative, Monad, MonadWriter String, Typeable)
--- >>> instance MonadIOAllowPutStr   Mock2 where allowPutStr   = tell
--- >>> instance MonadIOAllowPutStrLn Mock2 where allowPutStrLn = tell . (++"\n")
+-- >>> instance AllowPutStr   Mock2 where allowPutStr   = tell
+-- >>> instance AllowPutStrLn Mock2 where allowPutStrLn = tell . (++"\n")
 -- >>> runWriter $ runMock2 $ runLift sample2
 -- ((),"Start...Done\n")
 --
 sample2 :: ( Typeable1 m
-           , MonadIOAllowPutStr m
-           , MonadIOAllowPutStrLn m
+           , AllowPutStr m
+           , AllowPutStrLn m
            , Member (Lift m) r
            , SetMember Lift (Lift m) r
            ) =>

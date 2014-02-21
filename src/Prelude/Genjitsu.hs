@@ -2,23 +2,23 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Prelude.Genjitsu
     ( module Prelude
-    , MonadIOAllowPutChar(..),     putChar
-    , MonadIOAllowPutStr(..),      putStr
-    , MonadIOAllowPutStrLn(..),    putStrLn
-    , MonadIOAllowPrint(..),       print
+    , AllowPutChar(..),     putChar
+    , AllowPutStr(..),      putStr
+    , AllowPutStrLn(..),    putStrLn
+    , AllowPrint(..),       print
 
-    , MonadIOAllowGetChar(..),     getChar
-    , MonadIOAllowGetLine(..),     getLine
-    , MonadIOAllowGetContents(..), getContents
-    , MonadIOAllowInteract(..),    interact
+    , AllowGetChar(..),     getChar
+    , AllowGetLine(..),     getLine
+    , AllowGetContents(..), getContents
+    , AllowInteract(..),    interact
 
-    , MonadIOAllowReadFile(..),    readFile
-    , MonadIOAllowWriteFile(..),   writeFile
-    , MonadIOAllowAppendFile(..),  appendFile
-    , MonadIOAllowReadIO(..),      readIO
-    , MonadIOAllowReadLn(..),      readLn
+    , AllowReadFile(..),    readFile
+    , AllowWriteFile(..),   writeFile
+    , AllowAppendFile(..),  appendFile
+    , AllowReadIO(..),      readIO
+    , AllowReadLn(..),      readLn
 
-    , MonadIOAllowIoError(..),     ioError
+    , AllowIoError(..),     ioError
     ) where
 
 import Prelude hiding
